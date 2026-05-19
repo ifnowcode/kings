@@ -5,8 +5,8 @@ const ctx = canvas.getContext('2d');
 const difficultySelect = document.getElementById("difficultySelect");
 
 const BOARD_SIZE = 8;
-const TILE_SIZE = canvas.width / BOARD_SIZE;
-const PIECE_RADIUS = TILE_SIZE * 0.4;
+let TILE_SIZE = 0;
+let PIECE_RADIUS = 0;
 
 const LIGHT_COLOR = '#b00'; // red tiles
 const DARK_COLOR = '#111';
@@ -21,6 +21,10 @@ let pieces = [];
 let draggingPiece = null;
 let dragOffsetX = 0;
 let dragOffsetY = 0;
+
+let smallFontSize = 32;
+let largeFontSize = 42;
+
 
 function initPieces() {
   pieces = [];
@@ -83,14 +87,28 @@ function drawPieces() {
     ctx.strokeStyle = '#fff';
     ctx.stroke();
     ctx.restore();
+    /*
+    ctx.save();
+    ctx.setLineDash([5, 1]);
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, PIECE_RADIUS, 0, Math.PI * 2);
+    ctx.fillStyle = p.color;
+    ctx.fill();
+    ctx.lineWidth = 2;
+    ctx.strokeStyle = p.color === RED_PIECE ? "red" : "black";;
+    ctx.stroke();
+    ctx.restore();
+    */
+    
     // emoji
     ctx.save();
     ctx.fillStyle = p.color === RED_PIECE ? "black" : "red";
-    ctx.font = p.king ? "32px sans-serif" : "42px sans-serif";
+    ctx.font = p.king ? smallFontSize + "px sans-serif" : largeFontSize + "px sans-serif";
     ctx.textAlign = "center";
     ctx.textBaseline = "middle";
     ctx.fillText(p.king ? "🜲" : "✰", p.x, p.y); //👑♛♔🜲 ✰⭐✮★
     ctx.restore();
+    
     // dot
     /*
     ctx.save();
@@ -678,6 +696,30 @@ function restartGame() {
 
 document.getElementById("restartBtn").addEventListener("click", restartGame);
 
+window.addEventListener("resize", resizeCanvas);
+
+function resizeCanvas() {
+  const wrapper = document.getElementById("board-wrapper");
+  const size = wrapper.clientWidth;
+
+  canvas.width = size;
+  canvas.height = size;
+
+  TILE_SIZE = canvas.width / BOARD_SIZE;
+  PIECE_RADIUS = TILE_SIZE * 0.4;
+
+  // Recompute piece pixel positions
+  for (const p of pieces) {
+    p.x = p.col * TILE_SIZE + TILE_SIZE / 2;
+    p.y = p.row * TILE_SIZE + TILE_SIZE / 2;
+  }
+  
+  smallFontSize = TILE_SIZE * 0.55;
+  largeFontSize = TILE_SIZE * 0.70;
+
+  render();
+}
+
+
 restartGame();
-//initPieces();
-//render();
+resizeCanvas();

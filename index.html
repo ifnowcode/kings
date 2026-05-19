@@ -2,7 +2,6 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name=viewport content='width=device-width,initial-scale=1,user-scalable=0'> 
   <title>👑 Kings (Checkers)</title>
   <style>
     body {
@@ -10,18 +9,10 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 100vh;
+      /*height: 100vh;*/
       margin: 0;
       color: #eee;
       font-family: sans-serif;
-    }
-    #container {
-      display: flex;
-      flex-direction: column;
-      width: 100%;
-      align-items: center;
-      gap: 8px;
-      margin: 0 auto;
     }
     #controls {
       display: flex;
@@ -34,9 +25,23 @@
       padding: 4px 6px;
       font-size: 16px;
     }
+    #container {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      width: 100%;
+      max-width: 600px; /* optional */
+      margin: 0 auto;
+    }
+    #board-wrapper {
+      width: 90%;
+      aspect-ratio: 1 / 1; /* keeps board square */
+      /*flex-shrink: 0;*/
+    }
     #board {
-      border: 4px solid #444;
-      background: #000;
+      width: 100%;
+      height: 100%;
+      display: block;
     }
   </style>
 </head>
@@ -53,7 +58,7 @@
       </select>
     </div>
     <div id="board-wrapper">
-      <canvas id="board" width="480" height="480"></canvas>
+      <canvas id="board"></canvas>
     </div>
     <span>Player is Black</span>
   </div>

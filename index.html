@@ -47,6 +47,9 @@
 </head>
 <body>
   <div id="container">
+    <div id="board-wrapper">
+      <canvas id="board"></canvas>
+    </div>
     <div id="controls">
       <button id="restartBtn">Restart</button>
       <label for="difficulty">Difficulty:</label>
@@ -56,11 +59,8 @@
         <option value="2">2</option>
         <option value="3">3</option>
       </select>
+      <span>Player is Black</span>
     </div>
-    <div id="board-wrapper">
-      <canvas id="board"></canvas>
-    </div>
-    <span>Player is Black</span>
   </div>
   <script src='checkers.js'></script>
 </body>
